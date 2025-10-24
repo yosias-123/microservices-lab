@@ -46,7 +46,7 @@ cd auth-service
 django-admin startproject auth_service .
 python manage.py startapp users
 
-#### 2️⃣ Configurar Dockerfile
+## 2️⃣ Configurar Dockerfile
 FROM python:3.11
 WORKDIR /app
 COPY requirements.txt .
@@ -54,7 +54,7 @@ RUN pip install -r requirements.txt
 COPY . .
 CMD ["gunicorn", "auth_service.wsgi:application", "--bind", "0.0.0.0:8000"]
 
-#### 3️⃣ Extender docker-compose.yml
+## 3️⃣ Extender docker-compose.yml
 auth:
   build: ./auth-service
   container_name: auth_service
@@ -73,7 +73,7 @@ auth:
   ports:
     - "8000:8000"
 
-####4️⃣ Instalar dependencias (requirements.txt)
+## 4️⃣ Instalar dependencias (requirements.txt)
 django==5.0
 djangorestframework==3.15
 djangorestframework-simplejwt==5.3
@@ -81,7 +81,7 @@ psycopg2-binary
 redis
 django-cors-headers
 
-#### 5️⃣ Configurar settings.py
+## 5️⃣ Configurar settings.py
 
 Añadir apps: rest_framework, corsheaders, users
 
@@ -93,7 +93,7 @@ Añadir middleware corsheaders.middleware.CorsMiddleware
 
 Configurar REST_FRAMEWORK con JWTAuthentication
 
-#### 6️⃣ Modelo de usuario personalizado (users/models.py)
+## 6️⃣ Modelo de usuario personalizado (users/models.py)
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.db import models
 
@@ -121,7 +121,7 @@ Registrar en settings.py:
 
 AUTH_USER_MODEL = 'users.User'
 
-#### 7️⃣ Endpoints con JWT
+## 7️⃣ Endpoints con JWT
 
 Usar TokenObtainPairView y TokenRefreshView de rest_framework_simplejwt
 
@@ -137,7 +137,7 @@ urlpatterns = [
     path('api/register/', RegisterView.as_view()),
 ]
 
-#### 8️⃣ Probar con Postman
+## 8️⃣ Probar con Postman
 
 POST /api/register/ → crear usuario
 
@@ -145,7 +145,7 @@ POST /api/token/ → obtener access/refresh token
 
 POST /api/token/refresh/ → renovar token
 
-#### 9️⃣ Verificar conexión con DB y Redis
+## 9️⃣ Verificar conexión con DB y Redis
 docker exec -it auth_service python manage.py shell
 
 ✅ Checklist general
